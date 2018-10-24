@@ -53,8 +53,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .withSubject(((User) auth.getPrincipal()).getUsername())
                 .withExpiresAt(expiretionDate)
                 .sign(HMAC512(SECRET.getBytes()));
-        res.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
-        res.setHeader("Expires", expiretionDate.toString());
+        res.setHeader("Content-Type", "application/json");
+        res.getWriter().write("{\"token\":\"JWT " + token + "\", \"expires\": \""+expiretionDate.toString()+"\"}");
     }
 
     @Override
