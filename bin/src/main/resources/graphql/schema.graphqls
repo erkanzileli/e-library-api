@@ -1,0 +1,18 @@
+type Schema{
+    Query: Query
+    Mutation: Mutation
+}
+
+type Query {
+    authors: [Author]
+}
+
+type Mutation {
+    createAuthor(firstName: String!, lastName: String!): Author
+}
+
+type Author{
+    id: Long
+    firstName: String
+    lastName: String
+}
