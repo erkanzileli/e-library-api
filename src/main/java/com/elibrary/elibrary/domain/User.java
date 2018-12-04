@@ -110,4 +110,14 @@ public class User {
     public void setRequested(boolean requested) {
         isRequested = requested;
     }
+    
+   public boolean transformUser() {
+       
+       if(this.isRequested()){
+           this.setRequested(false);
+       }else{
+           this.setRequested(true);
+       }
+       return this.isRequested();
+   }
 }

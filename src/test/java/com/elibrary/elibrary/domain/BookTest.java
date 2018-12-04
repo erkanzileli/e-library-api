@@ -29,12 +29,12 @@ public class BookTest {
 	}
 
 	@Test
-	public void getId() {
+	public void testGetId() {
 		Assert.assertEquals(book.getId(),0);
 	}
 
 	@Test
-	public void setId() {
+	public void testSetId() {
 		long id=1;
 		book.setId(id);
 		Assert.assertEquals(book.getId(),id);
@@ -42,106 +42,106 @@ public class BookTest {
 
 
 	@Test
-	public void getName() {
+	public void testGetName() {
 		Assert.assertEquals(book.getName(),name);
 	}
 
 	@Test
-	public void setName(){
+	public void testSetName(){
 	String name="Onurcemkarakoc";
 	book.setName(name);
 	Assert.assertEquals(book.getName(),name);
 	}
 
 	@Test
-	public void getTitle() {
+	public void testGetTitle() {
 		Assert.assertEquals(book.getTitle(),title);
 	}
 
 
 	@Test
-	public void setTitle() {
+	public void testSetTitle() {
 		String title= "Baslik";
 		book.setTitle(title);
 		Assert.assertEquals(book.getTitle(),title);
 	}
 
 	@Test
-	public void getDescription() {
+	public void testGetDescription() {
 		Assert.assertEquals(book.getDescription(),description);
 	}
 
 	@Test
-	public void setDescription() {
+	public void testSetDescription() {
 		String description="desc";
 		book.setDescription(description);
 		Assert.assertEquals(book.getDescription(),description);
 	}
 
 	@Test
-	public void getPageCount() {Assert.assertEquals(book.getPageCount(),pageCount);}
+	public void testGetPageCount() {Assert.assertEquals(book.getPageCount(),pageCount);}
 
 
 	@Test
-	public void setPageCount() {
+	public void testSetPageCount() {
 		int pageCount=330;
 		book.setPageCount(pageCount);
 		Assert.assertEquals(book.getPageCount(),pageCount);
 	}
 
 	@Test
-	public void getStatus() { Assert.assertEquals(book.getStatus(),status); }
+	public void testGetStatus() { Assert.assertEquals(book.getStatus(),status); }
 
 	@Test
-	public void setStatus() {
+	public void testSetStatus() {
 		int status=0;
 		book.setStatus(status);
 		Assert.assertEquals(book.getStatus(),status);
 	}
 
 	@Test
-	public void getAuthor() {
+	public void testGetAuthor() {
 		Assert.assertEquals(book.getAuthor(),author);
 	}
 
 	@Test
-	public void setAuthor() {
+	public void testSetAuthor() {
 		Author author=new Author("fisrtname","lastname");
 		book.setAuthor(author);
 		Assert.assertEquals(book.getAuthor(),author);
 	}
 
 	@Test
-	public void getDownloadCount() {
+	public void testGetDownloadCount() {
 		Assert.assertEquals(book.getDownloadCount(),downloadCount);
 	}
 
 	@Test
-	public void setDownloadCount() {
+	public void testSetDownloadCount() {
 		int downloadCount=1000;
 		book.setDownloadCount(downloadCount);
 		Assert.assertEquals(book.getDownloadCount(),downloadCount);
 	}
 
 	@Test
-	public void getLikeCount() {
+	public void testGetLikeCount() {
 		Assert.assertEquals(book.getLikeCount(),likeCount);
 	}
 
 	@Test
-	public void setLikeCount() {
+	public void testSetLikeCount() {
 		int likeCount=222;
 		book.setLikeCount(likeCount);
 		Assert.assertEquals(book.getLikeCount(),likeCount);
 	}
 
 	@Test
-	public void getUser() {
+	public void testGetUser() {
 		Assert.assertEquals(book.getUser(),user);
 	}
 
 	@Test
-	public void setUser() {
+	public void testSetUser() {
 		User user=new User("un","pw","fn","ln","e","t",1,false);
 		book.setUser(user);
 		Assert.assertEquals(book.getUser(),user);
@@ -149,13 +149,13 @@ public class BookTest {
 
 
 	@Test
-	public void getCategory() {
+	public void testGetCategory() {
 		Assert.assertEquals(book.getCategory(),bookCategory);
 	}
 
 
 	@Test
-	public void setCategory() {
+	public void testSetCategory() {
 		BookCategory category=new BookCategory("Macera");
 		book.setCategory(category);
 		Assert.assertEquals(book.getCategory(),category);

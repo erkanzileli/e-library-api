@@ -11,7 +11,10 @@ import java.util.Optional;
 public class Mutation implements GraphQLMutationResolver {
     private AuthorRepository authorRepository;
     private UserRepository userRepository;
-
+    
+    public Mutation() {
+    	
+    }
     public Mutation(AuthorRepository authorRepository,UserRepository userRepository) {
         this.userRepository = userRepository;
         this.authorRepository = authorRepository;
@@ -20,16 +23,12 @@ public class Mutation implements GraphQLMutationResolver {
     public Author createAuthor(String firstName, String lastName) {
         return authorRepository.save(new Author(firstName, lastName));
     }
+    
+//    public boolean transformUser(long id) {
+//    	User user = userRepository.getOne(id)
+//    	return user.transformUser();
+//    }
 
-    public User transformUser(long id) {
-        User user=userRepository.getOne(id);
-        if(user.isRequested()){
-            user.setRequested(false);
-        }else{
-            user.setRequested(true);
-        }
-        return userRepository.save(user);
-    }
 
 
 }
