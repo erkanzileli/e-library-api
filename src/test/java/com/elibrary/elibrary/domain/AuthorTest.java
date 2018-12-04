@@ -18,12 +18,12 @@ public class AuthorTest {
 
 //	@BeforeClass
 //	public void beforeAll() {
-//
+//		
 //	}
 //
 //	@AfterClass
 //	public void afterAll() {
-//
+//		
 //	}
 
 	@Before
@@ -47,10 +47,25 @@ public class AuthorTest {
 	}
 
 	@Test
-	public void testGetLastName() {
+	public void testLastName() {
 		assertEquals(author.getLastName(), LAST_NAME);
 	}
 
+	@Test
+	public void testSetFirstName() {
+		String name = "fatma";
+		author.setFirstName(name);
+		assertEquals(author.getFirstName(), name);
+
+	}
+	@Test
+	public void testSetLastName() {
+	String name= "sener";
+	author.setLastName(name);
+	assertEquals(author.getLastName(),name);
+	
+	
+	}
 	@Test
 	public void testSetId() {
 		long id = 1;
@@ -58,17 +73,4 @@ public class AuthorTest {
 		assertEquals(author.getId(), id);
 	}
 
-	@Test
-	public void testSetFirstName() {
-		String firstName = "Akilah";
-		author.setFirstName(firstName);
-		assertEquals(author.getFirstName(), firstName);
-	}
-
-	@Test
-	public void testSetLastName() {
-		String lastName = "Akilah";
-		author.setLastName(lastName);
-		assertEquals(author.getLastName(), lastName);
-	}
 }
