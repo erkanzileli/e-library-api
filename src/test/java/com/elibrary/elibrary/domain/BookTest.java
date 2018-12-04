@@ -15,7 +15,8 @@ public class BookTest {
 	private Author author =new Author("Erkan","Zileli");
 	private int	downloadCount = 3322;
 	private int	likeCount = 1212;
-	private User user = new User("username","password");
+	private User user = new User("username","password","firstname","lastname","email",
+			"type",1,false);
 	private BookCategory bookCategory = new BookCategory("Drama");
 
 	@Before
@@ -141,7 +142,7 @@ public class BookTest {
 
 	@Test
 	public void setUser() {
-		User user=new User("un","pw");
+		User user=new User("un","pw","fn","ln","e","t",1,false);
 		book.setUser(user);
 		Assert.assertEquals(book.getUser(),user);
 	}
