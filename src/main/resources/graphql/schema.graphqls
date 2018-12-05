@@ -9,7 +9,7 @@ type Query {
 
 type Mutation {
     createAuthor(firstName: String!, lastName: String!): Author
-    transformUser(id: Int!): Bool
+    transformUser(id: Int!): Boolean
     updateUser(id: Int!,firstName: String,lastName: String, email: String): User
 }
 
@@ -27,7 +27,7 @@ type User{
 	email: String
 	type: String
 	status: Int
-	isRequested: Bool 
+	isRequested: Boolean 
 }
 
 
