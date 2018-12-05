@@ -28,6 +28,15 @@ public class Mutation implements GraphQLMutationResolver {
     	User user = userRepository.getOne(id);
     	return user.transformUser();
     }
+    
+    public User updateUser(long id, String firstName, String lastName,String email) {
+    	User user = userRepository.getOne(id);
+    	user.updateUser(firstName, lastName, email);
+    	return user;
+
+    }
+    
+    
 
 
 
