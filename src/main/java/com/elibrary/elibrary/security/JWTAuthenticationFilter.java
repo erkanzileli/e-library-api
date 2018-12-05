@@ -50,11 +50,12 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain, Authentication auth) throws IOException, ServletException {
         Date expirationDate = new Date(System.currentTimeMillis() + EXPIRATION_TIME);
         String token = JWT.create()
-                .withSubject(((User) auth.getPrincipal()).getUsername())
+                .withClaim("username", ((User) auth.getPrincipal()).getUsername())
+                .withClaim("role", ((User) auth.getPrincipal()).getAuthorities().iterator().next().getAuthority())
                 .withExpiresAt(expirationDate)
                 .sign(HMAC512(SECRET.getBytes()));
         res.setHeader("Content-Type", "application/json");
-        res.getWriter().write("{\"token\":\"JWT " + token + "\", \"expires\": \""+expirationDate.toString()+"\"}");
+        res.getWriter().write("{\"token\":\"JWT " + token + "\", \"expires\": \"" + expirationDate.toString() + "\"}");
     }
 
     @Override

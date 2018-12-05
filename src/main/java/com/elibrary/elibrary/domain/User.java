@@ -39,6 +39,9 @@ public class User {
         this.isRequested = isRequested;
     }
 
+    public User() {
+    }
+
     public long getId() {
         return id;
     }
