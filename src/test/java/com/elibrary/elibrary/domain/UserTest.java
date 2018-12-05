@@ -63,10 +63,17 @@ public class UserTest {
     }
 
     @Test
-    public void testSetPassword() {
+    public void testPassword() {
+        String password="pw";
+        user.setPassword(password);
+        Assert.assertEquals(user.getPassword(),password);
+    }
+
+    @Test
+    public void testChangePassword() {
         String password="pw";
     	bCryptPasswordEncoder = new BCryptPasswordEncoder();
-    	user.setPassword(password);
+    	user.changePassword(password);
     	boolean result = bCryptPasswordEncoder.matches(password, user.getPassword());
         Assert.assertTrue(result);
     }

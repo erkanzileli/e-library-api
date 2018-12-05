@@ -67,8 +67,12 @@ public class User {
 	}
 
 	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void changePassword(String password){
 		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-		this.password = bCryptPasswordEncoder.encode(password);
+		this.setPassword(bCryptPasswordEncoder.encode(password));
 	}
 
 	public String getFirstName() {
