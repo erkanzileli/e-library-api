@@ -4,6 +4,8 @@ import com.elibrary.elibrary.graphql.GraphQLErrorAdapter;
 import com.elibrary.elibrary.graphql.Mutation;
 import com.elibrary.elibrary.graphql.Query;
 import com.elibrary.elibrary.repository.AuthorRepository;
+import com.elibrary.elibrary.repository.UserRepository;
+
 import graphql.ExceptionWhileDataFetching;
 import graphql.GraphQLError;
 import graphql.servlet.GraphQLErrorHandler;
@@ -19,6 +21,7 @@ import java.util.stream.Collectors;
 @SpringBootApplication
 public class ELibraryApplication {
 
+
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
@@ -30,8 +33,8 @@ public class ELibraryApplication {
     }
 
     @Bean
-    public Mutation mutation(AuthorRepository authorRepository) {
-        return new Mutation(authorRepository);
+    public Mutation mutation(AuthorRepository authorRepository,UserRepository userRepository) {
+        return new Mutation(authorRepository,userRepository);
     }
 
     public static void main(String[] args) {

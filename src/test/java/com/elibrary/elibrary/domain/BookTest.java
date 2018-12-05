@@ -160,6 +160,13 @@ public class BookTest {
 		book.setCategory(category);
 		Assert.assertEquals(book.getCategory(),category);
 	}
+	
+	
+	
+	
+	
+	
+	
 
 
 }

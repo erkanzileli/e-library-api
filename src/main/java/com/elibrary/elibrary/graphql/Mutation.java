@@ -24,10 +24,10 @@ public class Mutation implements GraphQLMutationResolver {
         return authorRepository.save(new Author(firstName, lastName));
     }
     
-//    public boolean transformUser(long id) {
-//    	User user = userRepository.getOne(id)
-//    	return user.transformUser();
-//    }
+    public boolean transformUser(long id) {
+    	User user = userRepository.getOne(id);
+    	return user.transformUser();
+    }
 
 
 

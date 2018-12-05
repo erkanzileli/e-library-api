@@ -1,13 +1,17 @@
 package com.elibrary.elibrary.domain;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class UserTest {
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private User user;
     private String username="username";
@@ -15,7 +19,7 @@ public class UserTest {
     private String firstName="abdül";
     private String lastName="kadir";
     private String email="abdül.com";
-    private String type="yakisikli ";
+    private String type="Admin";
     private int status=1;
     private boolean isRequested=true;
 
@@ -61,8 +65,10 @@ public class UserTest {
     @Test
     public void testSetPassword() {
         String password="pw";
-        user.setPassword(password);
-        Assert.assertEquals(user.getPassword(),password);
+    	bCryptPasswordEncoder = new BCryptPasswordEncoder();
+    	user.setPassword(password);
+    	boolean result = bCryptPasswordEncoder.matches(password, user.getPassword());
+        Assert.assertTrue(result);
     }
 
     @Test
@@ -142,7 +148,41 @@ public class UserTest {
     	boolean newIsRequested = user.transformUser();
         assertNotEquals(oldIsRequested,newIsRequested);
     }
+    
+    @Test
+    public void testUpdateUserIsEquals() {
+    	String firstName = "FOO";
+    	String lastName = "Bar";
+        String email="foobar.com";
+        user.updateUser(firstName,lastName,email);
+    	assertEquals(firstName, user.getFirstName());
+    	assertEquals(lastName, user.getLastName());
+    	assertEquals(email, user.getEmail());
 
+    }
+    @Test
+    public void testUpdateUserIsNotNull() {
+    	String firstName = null;
+    	String lastName = null;
+        String email=null;
+        user.updateUser(firstName,lastName,email);
+    	assertNotNull(user.getFirstName());
+    	assertNotNull(user.getLastName());
+    	assertNotNull(user.getEmail());
+    	
+    }
+    @Test
+    public void testUpdateUserMixture() {
+    	String firstName = "Foo";
+    	String lastName = null;
+        String email=null;
+        user.updateUser(firstName,lastName,email);
+    	assertEquals(firstName, user.getFirstName());
+    	assertNotNull(user.getLastName());
+    	assertNotNull(user.getEmail());
+    	
+    }
+    
     
     
 

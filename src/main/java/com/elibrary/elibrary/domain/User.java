@@ -5,119 +5,141 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.apache.commons.io.output.ThresholdingOutputStream;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 @Entity
 public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
 
-    private String username;
+	private String username;
 
-    private String password;
+	private String password;
 
-    private String firstName;
+	private String firstName;
 
-    private String lastName;
+	private String lastName;
 
-    private String email;
+	private String email;
 
-    private String type;
+	private String type;
 
-    private int status;
+	private int status;
 
-    private boolean isRequested;
+	private boolean isRequested;
 
-    public User(String username, String password, String firstName, String lastName, String email, String type, int status, boolean isRequested) {
-        this.username = username;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.type = type;
-        this.status = status;
-        this.isRequested = isRequested;
-    }
+	public User(String username, String password, String firstName, String lastName, String email, String type,
+			int status, boolean isRequested) {
+		this.username = username;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.type = type;
+		this.status = status;
+		this.isRequested = isRequested;
+	}
 
-    public long getId() {
-        return id;
-    }
+	public User() {
 
-    public void setId(long id) {
-        this.id = id;
-    }
+	}
 
-    public String getUsername() {
-        return username;
-    }
+	public long getId() {
+		return id;
+	}
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+	public void setId(long id) {
+		this.id = id;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public String getUsername() {
+		return username;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-    public String getFirstName() {
-        return firstName;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+	public void setPassword(String password) {
+		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+		this.password = bCryptPasswordEncoder.encode(password);
+	}
 
-    public String getLastName() {
-        return lastName;
-    }
+	public String getFirstName() {
+		return firstName;
+	}
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public String getLastName() {
+		return lastName;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 
-    public String getType() {
-        return type;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setType(String type) {
-        this.type = type;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public int getStatus() {
-        return status;
-    }
+	public String getType() {
+		return type;
+	}
 
-    public void setStatus(int status) {
-        this.status = status;
-    }
+	public void setType(String type) {
+		this.type = type;
+	}
 
-    public boolean isRequested() {
-        return isRequested;
-    }
+	public int getStatus() {
+		return status;
+	}
 
-    public void setRequested(boolean requested) {
-        isRequested = requested;
-    }
-    
-   public boolean transformUser() {
-       
-       if(this.isRequested()){
-           this.setRequested(false);
-       }else{
-           this.setRequested(true);
-       }
-       return this.isRequested();
-   }
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	public boolean isRequested() {
+		return isRequested;
+	}
+
+	public void setRequested(boolean requested) {
+		isRequested = requested;
+	}
+
+	public boolean transformUser() {
+
+		if (this.isRequested()) {
+			this.setRequested(false);
+		} else {
+			this.setRequested(true);
+		}
+		return this.isRequested();
+	}
+
+	public User updateUser(String firstName, String lastName, String email) {
+		if (firstName!=null) {
+			this.setFirstName(firstName);
+		}
+		if (lastName!=null) {
+			this.setLastName(lastName);
+		}
+		if (email!=null) {
+			this.setEmail(email);
+		}
+		return this;
+	}
 }
