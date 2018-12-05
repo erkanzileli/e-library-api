@@ -1,11 +1,17 @@
 package com.elibrary.elibrary.domain;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class UserTest {
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private User user;
     private String username="username";
@@ -13,7 +19,7 @@ public class UserTest {
     private String firstName="abdül";
     private String lastName="kadir";
     private String email="abdül.com";
-    private String type="yakisikli ";
+    private String type="Admin";
     private int status=1;
     private boolean isRequested=true;
 
@@ -28,113 +34,157 @@ public class UserTest {
 
 
     @Test
-    public void getId() {
+    public void testGetId() {
         Assert.assertEquals(user.getId(),0);
     }
 
     @Test
-    public void setId() {
+    public void testSetId() {
         long id=1;
         user.setId(id);
         Assert.assertEquals(user.getId(),id);
     }
 
     @Test
-    public void getUsername() {
+    public void testGetUsername() {
         Assert.assertEquals(user.getUsername(),username);
     }
 
     @Test
-    public void setUsername() {
+    public void testSetUsername() {
         String username="un";
         user.setUsername(username);
         Assert.assertEquals(user.getUsername(),username);
     }
 
     @Test
-    public void getPassword() {
+    public void testGetPassword() {
         Assert.assertEquals(user.getPassword(),password);
     }
 
     @Test
-    public void setPassword() {
+    public void testSetPassword() {
         String password="pw";
-        user.setPassword(password);
-        Assert.assertEquals(user.getPassword(),password);
+    	bCryptPasswordEncoder = new BCryptPasswordEncoder();
+    	user.setPassword(password);
+    	boolean result = bCryptPasswordEncoder.matches(password, user.getPassword());
+        Assert.assertTrue(result);
     }
 
     @Test
-    public void getFirstName() {
+    public void testGetFirstName() {
         Assert.assertEquals(user.getFirstName(),firstName);
     }
 
     @Test
-    public void setFirstName() {
+    public void testSetFirstName() {
         String firstName="a";
         user.setFirstName(firstName);
         Assert.assertEquals(user.getFirstName(),firstName);
     }
 
     @Test
-    public void getLastName() {
+    public void testGetLastName() {
     Assert.assertEquals(user.getLastName(),lastName);
     }
 
     @Test
-    public void setLastName() {
+    public void testSetLastName() {
         String lastName="b";
         user.setLastName(lastName);
         Assert.assertEquals(user.getLastName(),lastName);
     }
 
     @Test
-    public void getEmail() {
+    public void testGetEmail() {
         Assert.assertEquals(user.getEmail(),email);
     }
 
     @Test
-    public void setEmail() {
+    public void testSetEmail() {
         String email="e";
         user.setEmail(email);
         Assert.assertEquals(user.getEmail(),email);
     }
 
     @Test
-    public void getType() {
+    public void testGetType() {
         Assert.assertEquals(user.getType(),type);
     }
 
     @Test
-    public void setType() {
+    public void testSetType() {
         String type="t";
         user.setType(type);
         Assert.assertEquals(user.getType(),type);
     }
 
     @Test
-    public void getStatus() {
+    public void testGetStatus() {
         Assert.assertEquals(user.getStatus(),status);
     }
 
     @Test
-    public void setStatus() {
+    public void testSetStatus() {
         int status=1;
         user.setStatus(status);
         Assert.assertEquals(user.getStatus(),status);
     }
 
     @Test
-    public void isRequested() {
+    public void testIsRequested() {
         Assert.assertEquals(user.isRequested(),isRequested);
     }
 
     @Test
-    public void setRequested() {
+    public void testSetRequested() {
         boolean requested=false;
         user.setRequested(requested);
         Assert.assertEquals(user.isRequested(),requested);
     }
+    @Test
+    public void testTransformUser() {
+    	boolean oldIsRequested = user.isRequested();
+    	boolean newIsRequested = user.transformUser();
+        assertNotEquals(oldIsRequested,newIsRequested);
+    }
+    
+    @Test
+    public void testUpdateUserIsEquals() {
+    	String firstName = "FOO";
+    	String lastName = "Bar";
+        String email="foobar.com";
+        user.updateUser(firstName,lastName,email);
+    	assertEquals(firstName, user.getFirstName());
+    	assertEquals(lastName, user.getLastName());
+    	assertEquals(email, user.getEmail());
 
+    }
+    @Test
+    public void testUpdateUserIsNotNull() {
+    	String firstName = null;
+    	String lastName = null;
+        String email=null;
+        user.updateUser(firstName,lastName,email);
+    	assertNotNull(user.getFirstName());
+    	assertNotNull(user.getLastName());
+    	assertNotNull(user.getEmail());
+    	
+    }
+    @Test
+    public void testUpdateUserMixture() {
+    	String firstName = "Foo";
+    	String lastName = null;
+        String email=null;
+        user.updateUser(firstName,lastName,email);
+    	assertEquals(firstName, user.getFirstName());
+    	assertNotNull(user.getLastName());
+    	assertNotNull(user.getEmail());
+    	
+    }
+    
+    
+    
 
 
 
