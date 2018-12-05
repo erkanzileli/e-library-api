@@ -4,6 +4,7 @@ import com.elibrary.elibrary.graphql.GraphQLErrorAdapter;
 import com.elibrary.elibrary.graphql.Mutation;
 import com.elibrary.elibrary.graphql.Query;
 import com.elibrary.elibrary.repository.AuthorRepository;
+import com.elibrary.elibrary.repository.BookRepository;
 import com.elibrary.elibrary.repository.UserRepository;
 
 import graphql.ExceptionWhileDataFetching;
@@ -28,8 +29,8 @@ public class ELibraryApplication {
     }
 
     @Bean
-    public Query query(AuthorRepository authorRepository) {
-        return new Query(authorRepository);
+    public Query query(AuthorRepository authorRepository, BookRepository bookRepository) {
+        return new Query(authorRepository,bookRepository);
     }
 
     @Bean

@@ -5,6 +5,7 @@ type Schema{
 
 type Query {
     authors: [Author]
+    books: [Book]
 }
 
 type Mutation {
@@ -29,6 +30,39 @@ type User{
 	status: Int
 	isRequested: Boolean 
 }
+
+type Book {
+	id: Long
+	name: String
+	title: String
+	description: String
+	pageCount: Int
+	status: Int
+	author: Author
+	downloadCount: Int
+	likeCount: Int
+	user: User
+	category: BookCategory
+
+}
+
+type BookCategory{
+	id: Long
+	name: String
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
