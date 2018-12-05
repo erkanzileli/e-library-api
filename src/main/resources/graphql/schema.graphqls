@@ -9,6 +9,8 @@ type Query {
 
 type Mutation {
     createAuthor(firstName: String!, lastName: String!): Author
+    transformUser(id: Int!): Bool
+    updateUser(id: Int!,firstName: String,lastName: String, email: String): User
 }
 
 type Author{
@@ -16,3 +18,19 @@ type Author{
     firstName: String
     lastName: String
 }
+
+type User{
+	id: Long
+	username: String
+	firstName: String
+	lastName: String
+	email: String
+	type: String
+	status: Int
+	isRequested: Bool 
+}
+
+
+
+
+
