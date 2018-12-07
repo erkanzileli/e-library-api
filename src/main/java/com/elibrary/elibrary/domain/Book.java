@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.auth0.jwt.interfaces.DecodedJWT;
+
 @Entity
 public class Book {
 
@@ -25,7 +27,7 @@ public class Book {
 	private int status;
 
 	@ManyToOne
-	@JoinColumn(name ="authorId")
+	@JoinColumn(name = "authorId")
 	private Author author;
 
 	private int downloadCount;
@@ -33,14 +35,15 @@ public class Book {
 	private int likeCount;
 
 	@ManyToOne
-	@JoinColumn(name ="userId")
+	@JoinColumn(name = "userId")
 	private User user;
 
 	@ManyToOne
-	@JoinColumn(name ="categoryId")
+	@JoinColumn(name = "categoryId")
 	private BookCategory category;
 
-	public Book(String name, String title, String description, int pageCount, int status, Author author, int downloadCount, int likeCount, User user, BookCategory category) {
+	public Book(String name, String title, String description, int pageCount, int status, Author author,
+			int downloadCount, int likeCount, User user, BookCategory category) {
 		this.name = name;
 		this.title = title;
 		this.description = description;
@@ -139,5 +142,16 @@ public class Book {
 
 	public void setCategory(BookCategory category) {
 		this.category = category;
+	}
+
+	public boolean updateBook(String name,String title,String description,Author author,User user,BookCategory bookCategory) {
+		this.setName(name);
+		this.setTitle(title);
+		this.setDescription(description);
+		this.setAuthor(author);
+		this.setUser(user);
+		this.setCategory(bookCategory);
+		return true;
+
 	}
 }

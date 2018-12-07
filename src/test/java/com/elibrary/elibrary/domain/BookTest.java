@@ -1,9 +1,16 @@
 package com.elibrary.elibrary.domain;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.auth0.jwt.impl.JWTParser;
+import com.auth0.jwt.interfaces.DecodedJWT;
 
 public class BookTest {
 	private Book book;
@@ -159,6 +166,36 @@ public class BookTest {
 		BookCategory category=new BookCategory("Macera");
 		book.setCategory(category);
 		Assert.assertEquals(book.getCategory(),category);
+	}
+	@Test
+	public void testUpdateBookWithManager() {
+		 String newname ="Horror Story";
+		 String newTitle = "This is a Horror Story";
+		 String newDescription = "Scary story";
+		 Author newAuthor =new Author("Onur","Yartaşı");
+		 User newUser = new User("username2","password2","firstname","lastname","email",
+					"type",1,false);
+		BookCategory newBookCategory = new BookCategory("Drama");
+		String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJlZGl0b3IiLCJleHAiOjE1NDQ0NzQxNTB9."
+				+ "Gjjj3NeBpD62v0yOdUG_u0iyAfH5QIDyFuxqpkQLclCxu7FpeUZztp_q-vwJt3t7lSVlTQXSj7TWhSeSU83UrQ";
+
+		DecodedJWT jwt = JWT.decode(token);
+	    String role = jwt.getClaim("role").asString();
+	    if(role.equals("editor")) {
+	    	 book.updateBook(newname,newTitle,newDescription,newAuthor,newUser,newBookCategory);
+	    }
+
+	    assertEquals(newname, book.getName());
+	    assertEquals(newTitle, book.getTitle());
+	    assertEquals(newDescription, book.getDescription());
+	    assertEquals(newAuthor, book.getAuthor());
+	    assertEquals(newUser, book.getUser());
+	    assertEquals(newBookCategory,book.getCategory());
+
+		
+		
+	
+		
 	}
 	
 	
