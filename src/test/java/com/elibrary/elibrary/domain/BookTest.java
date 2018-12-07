@@ -14,6 +14,8 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 
 public class BookTest {
 	private Book book;
+	private String role;
+	private String username;
 	private String name ="Onurcem";
 	private String title = "Onurcemin Sucu Ne?";
 	private String description = "Onurcemin tuvalet sorunları";
@@ -22,13 +24,19 @@ public class BookTest {
 	private Author author =new Author("Erkan","Zileli");
 	private int	downloadCount = 3322;
 	private int	likeCount = 1212;
-	private User user = new User("username","password","firstname","lastname","email",
+	private User user = new User("admin2","password","firstname","lastname","email",
 			"type",1,false);
 	private BookCategory bookCategory = new BookCategory("Drama");
 
 	@Before
 	public void beforeEach(){
 			book= new Book(name, title, description, pageCount, status, author, downloadCount, likeCount, user, bookCategory);
+			String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJlZGl0b3IiLCJleHAiOjE1NDQ0NzQxNTB9."
+					+ "Gjjj3NeBpD62v0yOdUG_u0iyAfH5QIDyFuxqpkQLclCxu7FpeUZztp_q-vwJt3t7lSVlTQXSj7TWhSeSU83UrQ";
+
+			DecodedJWT jwt = JWT.decode(token);
+		    role = jwt.getClaim("role").asString();
+		    username = jwt.getClaim("sub").asString();
 	}
 	@After
 	public void afterEach(){
@@ -176,12 +184,7 @@ public class BookTest {
 		 User newUser = new User("username2","password2","firstname","lastname","email",
 					"type",1,false);
 		BookCategory newBookCategory = new BookCategory("Drama");
-		String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJlZGl0b3IiLCJleHAiOjE1NDQ0NzQxNTB9."
-				+ "Gjjj3NeBpD62v0yOdUG_u0iyAfH5QIDyFuxqpkQLclCxu7FpeUZztp_q-vwJt3t7lSVlTQXSj7TWhSeSU83UrQ";
-
-		DecodedJWT jwt = JWT.decode(token);
-	    String role = jwt.getClaim("role").asString();
-	    if(role.equals("editor")) {
+	    if(role.equals("editor") || username.equals(book.getUser().getUsername())) {
 	    	 book.updateBook(newname,newTitle,newDescription,newAuthor,newUser,newBookCategory);
 	    }
 
