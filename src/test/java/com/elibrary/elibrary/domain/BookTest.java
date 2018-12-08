@@ -1,6 +1,9 @@
 package com.elibrary.elibrary.domain;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -8,14 +11,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.auth0.jwt.JWT;
-import com.auth0.jwt.exceptions.JWTDecodeException;
-import com.auth0.jwt.impl.JWTParser;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 public class BookTest {
 	private Book book;
-	private String role;
-	private String username;
+	private String tokenEditor;
+	private String tokenAdmin;
+	private String tokenAnother;
 	private String name ="Onurcem";
 	private String title = "Onurcemin Sucu Ne?";
 	private String description = "Onurcemin tuvalet sorunları";
@@ -24,19 +26,20 @@ public class BookTest {
 	private Author author =new Author("Erkan","Zileli");
 	private int	downloadCount = 3322;
 	private int	likeCount = 1212;
-	private User user = new User("admin2","password","firstname","lastname","email",
+	private User user = new User("editor","password","firstname","lastname","email",
 			"type",1,false);
 	private BookCategory bookCategory = new BookCategory("Drama");
 
 	@Before
 	public void beforeEach(){
 			book= new Book(name, title, description, pageCount, status, author, downloadCount, likeCount, user, bookCategory);
-			String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJlZGl0b3IiLCJleHAiOjE1NDQ0NzQxNTB9."
-					+ "Gjjj3NeBpD62v0yOdUG_u0iyAfH5QIDyFuxqpkQLclCxu7FpeUZztp_q-vwJt3t7lSVlTQXSj7TWhSeSU83UrQ";
+			tokenEditor ="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlZGl0b3IiLCJyb2xlIjoiZWRpdG9yIiwiZXhwIjoxNTQ0NjkzODI0fQ.MHjUPA6nuIj0RUp"
+					+ "--zQwoDxYGsZGzaAYYIxMxcOHO-_6MUsKvdF7Qt3CXnLmw558nDrXie-8pCm_hRkcm7kHEA";
+			tokenAdmin = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJhZG1pbiIsImV4cCI6MTU0NDY5Mzg4Nn0"
+					+ ".RJcKKfSWiYvJKCQUfNkamVnnakmI2lWADDNrnPjGR-8B7lzJDo3ISnwekieZX5rIWtFsWua1x1-NAPdmf82MXw";
+			tokenAnother = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbm90aGVyIiwicm9sZSI6ImVkaXRvciIsImV4cCI6MTU0NDY5NDA3M30."
+					+ "sFRbFpRAuG5i0Qcoshv-44xwTJH4uIc_dt0v7iCHVF9A9CaHa0llBVB77jitHc5rDlwStjl5OKqKq4VmjH1hww";
 
-			DecodedJWT jwt = JWT.decode(token);
-		    role = jwt.getClaim("role").asString();
-		    username = jwt.getClaim("sub").asString();
 	}
 	@After
 	public void afterEach(){
@@ -181,26 +184,52 @@ public class BookTest {
 		 String newTitle = "This is a Horror Story";
 		 String newDescription = "Scary story";
 		 Author newAuthor =new Author("Onur","Yartaşı");
-		 User newUser = new User("username2","password2","firstname","lastname","email",
+		 User newUser = new User("editor2","password2","firstname","lastname","email",
 					"type",1,false);
 		BookCategory newBookCategory = new BookCategory("Drama");
-	    if(role.equals("editor") || username.equals(book.getUser().getUsername())) {
-	    	 book.updateBook(newname,newTitle,newDescription,newAuthor,newUser,newBookCategory);
-	    }
-
+		boolean result = book.updateBook(tokenAdmin,newname,newTitle,newDescription,newAuthor,newUser,newBookCategory);
+		assertTrue(result);
 	    assertEquals(newname, book.getName());
 	    assertEquals(newTitle, book.getTitle());
 	    assertEquals(newDescription, book.getDescription());
 	    assertEquals(newAuthor, book.getAuthor());
 	    assertEquals(newUser, book.getUser());
-	    assertEquals(newBookCategory,book.getCategory());
-
-		
-		
-	
+	    assertEquals(newBookCategory,book.getCategory());	
 		
 	}
 	
+	@Test
+	public void testUpdateBookWithSelfUser() {
+		 String newname ="Horror Story";
+		 String newTitle = "This is a Horror Story";
+		 String newDescription = "Scary story";
+		 Author newAuthor =null;
+		 User newUser = new User("username2","password2","firstname","lastname","email",
+					"type",1,false);
+		BookCategory newBookCategory = new BookCategory("Drama");
+		boolean result = book.updateBook(tokenEditor,newname,newTitle,newDescription,newAuthor,newUser,newBookCategory);
+		assertTrue(result);
+	    assertEquals(newname, book.getName());
+	    assertEquals(newTitle, book.getTitle());
+	    assertEquals(newDescription, book.getDescription());
+	    assertEquals(newAuthor, book.getAuthor());
+	    assertNotNull(book.getUser());
+	    assertEquals(newBookCategory,book.getCategory());	
+		
+	}
+	@Test
+	public void testUpdateBookWithAnotherUser() {
+		 String newname ="Horror Story";
+		 String newTitle = "This is a Horror Story";
+		 String newDescription = "Scary story";
+		 Author newAuthor =null;
+		 User newUser = new User("username2","password2","firstname","lastname","email",
+					"type",1,false);
+		BookCategory newBookCategory = new BookCategory("Drama");
+		boolean result = book.updateBook(tokenAnother,newname,newTitle,newDescription,newAuthor,newUser,newBookCategory);
+		assertFalse(result);	
+		
+	}
 	
 	
 	

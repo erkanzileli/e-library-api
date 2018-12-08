@@ -7,7 +7,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.DecodedJWT;
+
+
 
 @Entity
 public class Book {
@@ -144,14 +147,28 @@ public class Book {
 		this.category = category;
 	}
 
-	public boolean updateBook(String name,String title,String description,Author author,User user,BookCategory bookCategory) {
-		this.setName(name);
-		this.setTitle(title);
-		this.setDescription(description);
-		this.setAuthor(author);
-		this.setUser(user);
-		this.setCategory(bookCategory);
-		return true;
-
+	public boolean updateBook(String token,String name,String title,String description,Author author,User user,BookCategory bookCategory) {
+		DecodedJWT jwt = JWT.decode(token);
+	    String role = jwt.getClaim("role").asString();
+	    String username = jwt.getClaim("sub").asString();
+	    if(role.equals("admin")) {
+			this.setName(name);
+			this.setTitle(title);
+			this.setDescription(description);
+			this.setAuthor(author);
+			this.setUser(user);
+			this.setCategory(bookCategory);
+			return true;
+	    }else if (username.equals(this.getUser().getUsername())) {
+			this.setName(name);
+			this.setTitle(title);
+			this.setDescription(description);
+			this.setAuthor(author);
+			this.setCategory(bookCategory);
+			return true;
+	    }
+		return false;
 	}
+
+	
 }
