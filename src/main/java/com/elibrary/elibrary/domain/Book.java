@@ -59,6 +59,9 @@ public class Book {
 		this.category = category;
 	}
 
+	public Book() {
+	}
+
 	public long getId() {
 		return id;
 	}

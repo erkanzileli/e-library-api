@@ -4,6 +4,7 @@ import com.elibrary.elibrary.graphql.GraphQLErrorAdapter;
 import com.elibrary.elibrary.graphql.Mutation;
 import com.elibrary.elibrary.graphql.Query;
 import com.elibrary.elibrary.repository.AuthorRepository;
+import com.elibrary.elibrary.repository.BookCategoryRepository;
 import com.elibrary.elibrary.repository.BookRepository;
 import com.elibrary.elibrary.repository.UserRepository;
 
@@ -29,13 +30,13 @@ public class ELibraryApplication {
     }
 
     @Bean
-    public Query query(AuthorRepository authorRepository, BookRepository bookRepository) {
-        return new Query(authorRepository,bookRepository);
+    public Query query(AuthorRepository authorRepository, BookRepository bookRepository, BookCategoryRepository bookCategoryRepository, UserRepository userRepository) {
+        return new Query(authorRepository, bookCategoryRepository, bookRepository, userRepository);
     }
 
     @Bean
-    public Mutation mutation(AuthorRepository authorRepository,UserRepository userRepository) {
-        return new Mutation(authorRepository,userRepository);
+    public Mutation mutation(AuthorRepository authorRepository, BookRepository bookRepository, BookCategoryRepository bookCategoryRepository, UserRepository userRepository) {
+        return new Mutation(authorRepository,bookRepository, bookCategoryRepository, userRepository);
     }
 
     public static void main(String[] args) {

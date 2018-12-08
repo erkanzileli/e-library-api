@@ -5,11 +5,28 @@ type Schema{
 
 type Query {
     authors: [Author]
-    books: [Book]
+	author(id: Long!): Author
+	bookCategories: [BookCategory]
+	bookCategory(id: Long!): BookCategory
+	books: [Book]
+	book(id: Long!): Book
+	users: [User]
+	user(id: Long!): User
 }
 
 type Mutation {
-    createAuthor(firstName: String!, lastName: String!): Author
+	createAuthor(firstName: String!, lastName: String!): Author
+	updateAuthor(id: Long!, firstName: String!, lastName: String!): Author
+	deleteAuthor(id: Long!): Boolean
+
+	createBookCategory(name: String!): BookCategory
+	updateBookCategory(id: Long!, name: String): BookCategory
+	deleteBookCategory(id: Long!): Boolean
+
+	createBook(name: String!, title: String!, description: String, pageCount: Int!, userId: Long!, authorId: Long!, categoryId: Long!): Book
+	updateBook(id: Long!, name: String!, title: String!, description: String, pageCount: Int!, authorId: Long!, categoryId: Long!): Book
+	deleteBook(id: Long!): Boolean
+
     transformUser(id: Int!): Boolean
     updateUser(id: Int!,firstName: String,lastName: String, email: String): User
 }

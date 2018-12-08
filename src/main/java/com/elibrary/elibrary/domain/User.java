@@ -1,9 +1,6 @@
 package com.elibrary.elibrary.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -14,6 +11,7 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
+	@Column(unique = true)
 	private String username;
 
 	private String password;
@@ -22,6 +20,7 @@ public class User {
 
 	private String lastName;
 
+	@Column(unique = true)
 	private String email;
 
 	private String type;

@@ -19,8 +19,10 @@ public class BookCategory {
 	public BookCategory(String name) {
 		this.name = name; 
 	}
-	
-	
+
+	public BookCategory() {
+	}
+
 	public long getId() {
 		return id;
 	}
