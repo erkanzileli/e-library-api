@@ -169,6 +169,15 @@ public class Book {
 	    }
 		return false;
 	}
-
+	
+	public boolean deleteBook(String token) {
+		DecodedJWT jwt = JWT.decode(token);
+	    String role = jwt.getClaim("role").asString();
+	    String username = jwt.getClaim("sub").asString();
+	    if(role.equals("admin")) {
+			return true;
+	    }else if (username.equals(this.getUser().getUsername())) {return true;}
+		return false;
+	}
 	
 }

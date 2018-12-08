@@ -230,6 +230,22 @@ public class BookTest {
 		assertFalse(result);	
 		
 	}
+	@Test
+	public void testDeleteBookWithManager() {
+		boolean result = book.deleteBook(tokenAdmin);
+		assertTrue(result);
+	}
+	@Test
+	public void testDeleteBookWithSelfUser() {
+		boolean result = book.deleteBook(tokenEditor);
+		assertTrue(result);
+	}
+	@Test
+	public void testDeleteBookWithAnotherUser() {
+		boolean result = book.deleteBook(tokenAnother);
+		assertFalse(result);
+	}
+	
 	
 	
 	

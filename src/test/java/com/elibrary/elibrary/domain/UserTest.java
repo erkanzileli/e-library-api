@@ -21,7 +21,7 @@ public class UserTest {
     private String email="abdül.com";
     private String type="Admin";
     private int status=1;
-    private boolean isRequested=true;
+    private boolean isRequested=false;
 
     @Before
     public void beforeEach(){
@@ -151,6 +151,13 @@ public class UserTest {
     }
     @Test
     public void testTransformUser() {
+    	boolean oldIsRequested = user.isRequested();
+    	boolean newIsRequested = user.transformUser();
+        assertNotEquals(oldIsRequested,newIsRequested);
+    }
+    @Test
+    public void testTransformUserCancelRequest() {
+    	User user=new User("adnanfatih","adnanfatih123","Adnan","Fatih","adnan@fatih.com","editor",0,true);
     	boolean oldIsRequested = user.isRequested();
     	boolean newIsRequested = user.transformUser();
         assertNotEquals(oldIsRequested,newIsRequested);
