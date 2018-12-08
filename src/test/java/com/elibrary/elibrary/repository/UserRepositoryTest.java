@@ -58,5 +58,17 @@ public class UserRepositoryTest {
         userRepository.getOne(userdb.getId());
     	
     }
+    @Test
+    public void testTransformUser() {
+    	User user=new User("adnanfatih","adnanfatih123","Adnan","Fatih","adnan@fatih.com","editor",0,false);
+    	boolean oldRequested = user.isRequested();
+        userRepository.save(user);
+        User userdb = userRepository.getOne(user.getId());
+        userdb.transformUser();
+        userRepository.save(userdb);
+        User userdbTransofrmed = userRepository.getOne(user.getId());
+        assertNotEquals(oldRequested,userdbTransofrmed.isRequested());
+    	
+    }
 
 }
