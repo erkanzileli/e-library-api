@@ -121,8 +121,9 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public User updateUser(long id, String firstName, String lastName, String email) {
-        User user = userRepository.getOne(id);
+        User user = userRepository.findById(id).get();
         user.updateUser(firstName, lastName, email);
+        userRepository.save(user);
         return user;
     }
 }
