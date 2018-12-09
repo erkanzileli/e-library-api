@@ -28,7 +28,7 @@ type Mutation {
 	deleteBook(id: Long!, token: String!): Boolean
 
     transformUser(id: Int!): Boolean
-    updateUser(id: Int!,firstName: String,lastName: String, email: String): User
+    updateUser(id: Long!,firstName: String,lastName: String, email: String): User
 }
 
 type Author{
