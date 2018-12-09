@@ -24,8 +24,8 @@ type Mutation {
 	deleteBookCategory(id: Long!): Boolean
 
 	createBook(name: String!, title: String!, description: String, pageCount: Int!, userId: Long!, authorId: Long!, categoryId: Long!): Book
-	updateBook(id: Long!, name: String!, title: String!, description: String, pageCount: Int!, authorId: Long!, categoryId: Long!): Book
-	deleteBook(id: Long!): Boolean
+	updateBook(id: Long!, token: String!, name: String!, title: String!, description: String, pageCount: Int!, authorId: Long!, userId: Long!, categoryId: Long!): Book
+	deleteBook(id: Long!, token: String!): Boolean
 
     transformUser(id: Int!): Boolean
     updateUser(id: Int!,firstName: String,lastName: String, email: String): User

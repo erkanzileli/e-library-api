@@ -30,17 +30,17 @@ public class Query implements GraphQLQueryResolver {
         return authorRepository.findAll();
     }
     public Author author(long id){
-        return authorRepository.getOne(id);
+        return authorRepository.findById(id).get();
     }
 
     /*
-    Book
+    Book Category
      */
     public Iterable<BookCategory> bookCategories() {
         return bookCategoryRepository.findAll();
     }
     public BookCategory bookCategory(long id){
-        return bookCategoryRepository.getOne(id);
+        return bookCategoryRepository.findById(id).get();
     }
 
     /*
@@ -50,7 +50,7 @@ public class Query implements GraphQLQueryResolver {
         return bookRepository.findAll();
     }
     public Book book(long id){
-        return bookRepository.getOne(id);
+        return bookRepository.findById(id).get();
     }
 
     /*
@@ -60,6 +60,6 @@ public class Query implements GraphQLQueryResolver {
         return userRepository.findAll();
     }
     public User user(long id){
-        return userRepository.getOne(id);
+        return userRepository.findById(id).get();
     }
 }
