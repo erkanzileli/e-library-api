@@ -150,7 +150,7 @@ public class Book {
 		this.category = category;
 	}
 
-	public boolean updateBook(String token,String name,String title,String description,Author author,User user,BookCategory bookCategory) {
+	public boolean updateBook(String token,String name,String title,String description,int pageCount,Author author,User user,BookCategory bookCategory) {
 		DecodedJWT jwt = JWT.decode(token);
 	    String role = jwt.getClaim("role").asString();
 	    String username = jwt.getClaim("sub").asString();
@@ -158,6 +158,7 @@ public class Book {
 			this.setName(name);
 			this.setTitle(title);
 			this.setDescription(description);
+			this.setPageCount(pageCount);
 			this.setAuthor(author);
 			this.setUser(user);
 			this.setCategory(bookCategory);
@@ -166,6 +167,7 @@ public class Book {
 			this.setName(name);
 			this.setTitle(title);
 			this.setDescription(description);
+			this.setPageCount(pageCount);
 			this.setAuthor(author);
 			this.setCategory(bookCategory);
 			return true;

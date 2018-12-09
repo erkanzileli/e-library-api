@@ -87,21 +87,25 @@ public class Mutation implements GraphQLMutationResolver {
         return bookRepository.save(new Book(name, title,description,pageCount, 1, author, 0, 0 , user, bookCategory));
     }
 
-    public Book updateBook(long id, String name, String title, String description, int pageCount, long authorId, long categoryId) {
+    public Book updateBook(long id,String token, String name, String title, String description, int pageCount, long authorId,long userId, long categoryId) {
         Book book = bookRepository.getOne(id);
-        book.setName(name);
-        book.setTitle(title);
-        book.setDescription(description);
-        book.setPageCount(pageCount);
-        book.setAuthor(authorRepository.getOne(authorId));
-        book.setCategory(bookCategoryRepository.getOne(categoryId));
+        boolean result = book.updateBook(token,
+        		name,
+        		title,
+        		description,
+        		pageCount,
+        		authorRepository.getOne(authorId),
+        		userRepository.getOne(userId), 
+        		bookCategoryRepository.getOne(categoryId));
+        
         return bookRepository.save(book);
     }
 
-    public boolean deleteBook(long id) {
+    public boolean deleteBook(long id,String token) {
         try {
             Book book = bookRepository.getOne(id);
-            bookRepository.delete(book);
+            boolean result = book.deleteBook(token);
+            if (result) {bookRepository.delete(book);}
             return true;
         }catch (JpaObjectRetrievalFailureException e){
             return false;
