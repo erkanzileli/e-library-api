@@ -69,6 +69,7 @@ public class BookRepositoryTest {
 		 String newname ="Horror Story";
 		 String newTitle = "This is a Horror Story";
 		 String newDescription = "Scary story";
+		 int newPageCount=309;
 		 Author newAuthor =new Author("Onur","Yartaşı");
 		 bookRepository.save(book);
 
@@ -77,13 +78,14 @@ public class BookRepositoryTest {
 		BookCategory newBookCategory = new BookCategory("Drama");
 		
 		Book bookdb = bookRepository.getOne(book.getId());
-		boolean result = bookdb.updateBook(tokenAdmin,newname,newTitle,newDescription,newAuthor,newUser,newBookCategory);
+		boolean result = bookdb.updateBook(tokenAdmin,newname,newTitle,newDescription,newPageCount,newAuthor,newUser,newBookCategory);
 		bookRepository.save(bookdb);
 		Book bookdbUpdated = bookRepository.getOne(bookdb.getId());
 		assertTrue(result);
 	    assertEquals(newname, bookdbUpdated.getName());
 	    assertEquals(newTitle, bookdbUpdated.getTitle());
 	    assertEquals(newDescription, bookdbUpdated.getDescription());
+	    assertEquals(newPageCount, bookdbUpdated.getPageCount());
 	    assertEquals(newAuthor, bookdbUpdated.getAuthor());
 	    assertEquals(newUser, bookdbUpdated.getUser());
 	    assertEquals(newBookCategory,bookdbUpdated.getCategory());	
@@ -95,6 +97,7 @@ public class BookRepositoryTest {
 		 String newname ="Horror Story";
 		 String newTitle = "This is a Horror Story";
 		 String newDescription = "Scary story";
+		 int newPageCount=309;
 		 Author newAuthor =new Author("Onur","Yartaşı");
 		 bookRepository.save(book);
 
@@ -102,13 +105,14 @@ public class BookRepositoryTest {
 		BookCategory newBookCategory = new BookCategory("Drama");
 		
 		Book bookdb = bookRepository.getOne(book.getId());
-		boolean result = bookdb.updateBook(tokenEditor,newname,newTitle,newDescription,newAuthor,newUser,newBookCategory);
+		boolean result = bookdb.updateBook(tokenEditor,newname,newTitle,newDescription,newPageCount,newAuthor,newUser,newBookCategory);
 		bookRepository.save(bookdb);
 		Book bookdbUpdated = bookRepository.getOne(bookdb.getId());
 		assertTrue(result);
 	    assertEquals(newname, bookdbUpdated.getName());
 	    assertEquals(newTitle, bookdbUpdated.getTitle());
 	    assertEquals(newDescription, bookdbUpdated.getDescription());
+	    assertEquals(newPageCount, bookdbUpdated.getPageCount());
 	    assertEquals(newAuthor, bookdbUpdated.getAuthor());
 	    assertNotNull(bookdbUpdated.getUser());
 	    assertEquals(newBookCategory,bookdbUpdated.getCategory());	

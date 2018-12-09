@@ -19,7 +19,7 @@ import static org.junit.Assert.assertNotNull;
 @RunWith(SpringJUnit4ClassRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase
-public class BookCategoryTest {
+public class BookCategoryRepositoryTest {
 
     @Autowired
     private BookCategoryRepository bookCategoryRepository;

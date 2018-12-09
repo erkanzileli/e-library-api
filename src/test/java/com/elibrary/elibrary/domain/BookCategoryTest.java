@@ -10,7 +10,7 @@ public class BookCategoryTest {
 	
 	private BookCategory category;
 	private String name = "Ahmet";
-
+	
 	
 	@Before
 	public void beforeEach() {
