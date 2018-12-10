@@ -186,6 +186,7 @@ public class Book {
 	}
 	
 	public boolean deleteBook(String token) {
+		token = token.split(" ")[1];
 		DecodedJWT jwt = JWT.decode(token);
 	    String role = jwt.getClaim("role").asString();
 	    String username = jwt.getClaim("sub").asString();

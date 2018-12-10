@@ -11,7 +11,7 @@ type Query {
 	books: [Book]
 	book(id: Long!): Book
 	users: [User]
-	user(id: Long!): User
+	user(username: String!): User
 }
 
 type Mutation {
@@ -23,12 +23,13 @@ type Mutation {
 	updateBookCategory(id: Long!, name: String): BookCategory
 	deleteBookCategory(id: Long!): Boolean
 
-	createBook(name: String!, title: String!, description: String, pageCount: Int!, userId: Long!, authorId: Long!, categoryId: Long!): Book
+	createBook(name: String!, title: String!, description: String, pageCount: Int!, username: String!, authorId: Long!, categoryId: Long!): Book
 	updateBook(id: Long!, token: String!, name: String!, title: String!, description: String, pageCount: Int!, authorId: Long!, userId: Long!, categoryId: Long!): Book
 	deleteBook(id: Long!, token: String!): Boolean
 
     transformUser(id: Int!): Boolean
     updateUser(id: Long!,firstName: String,lastName: String, email: String): User
+	requestUser(username: String!): Boolean
 }
 
 type Author{
@@ -45,7 +46,8 @@ type User{
 	email: String
 	type: String
 	status: Int
-	isRequested: Boolean 
+	isRequested: Boolean
+	type: String
 }
 
 type Book {
