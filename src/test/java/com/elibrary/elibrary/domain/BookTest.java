@@ -21,6 +21,7 @@ public class BookTest {
 	private String name ="Onurcem";
 	private String title = "Onurcemin Sucu Ne?";
 	private String description = "Onurcemin tuvalet sorunları";
+	private String filePath = "book/book.pdf";
 	private int pageCount = 333;
 	private int status = 1;
 	private Author author =new Author("Erkan","Zileli");
@@ -95,6 +96,19 @@ public class BookTest {
 		String description="desc";
 		book.setDescription(description);
 		Assert.assertEquals(book.getDescription(),description);
+	}
+	
+	@Test
+	public void testGetFilePath() {
+		assertEquals(filePath, book.getFilePath());
+	}
+	
+	@Test
+	public void testSetFilePath() {
+		String newFilePath = "book/book1.png";
+		book.setFilePath(newFilePath);
+		assertEquals(newFilePath,book.getFilePath());
+		
 	}
 
 	@Test

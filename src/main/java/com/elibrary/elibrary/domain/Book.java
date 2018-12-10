@@ -24,6 +24,8 @@ public class Book {
 	private String title;
 
 	private String description;
+	
+	private String filePath;
 
 	private int pageCount;
 
@@ -92,6 +94,14 @@ public class Book {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	public String getFilePath() {
+		return filePath;
+	}
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
 	}
 
 	public int getPageCount() {
@@ -184,5 +194,6 @@ public class Book {
 	    }else if (username.equals(this.getUser().getUsername())) {return true;}
 		return false;
 	}
+
 	
 }
