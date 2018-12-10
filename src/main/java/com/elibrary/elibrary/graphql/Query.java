@@ -59,7 +59,7 @@ public class Query implements GraphQLQueryResolver {
     public Iterable<User> users() {
         return userRepository.findAll();
     }
-    public User user(long id){
-        return userRepository.findById(id).get();
+    public User user(String username){
+        return userRepository.findByUsername(username);
     }
 }
