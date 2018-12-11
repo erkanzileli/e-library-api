@@ -195,12 +195,12 @@ public class BookTest {
 	}
 	@Test
 	public void testUpdateBookWithManager() {
-		 String newname ="Horror Story";
-		 String newTitle = "This is a Horror Story";
-		 String newDescription = "Scary story";
-		 int newPageCount=309;
-		 Author newAuthor =new Author("Onur","Yartaşı");
-		 User newUser = new User("editor2","password2","firstname","lastname","email",
+		String newname ="Horror Story";
+		String newTitle = "This is a Horror Story";
+		String newDescription = "Scary story";
+		int newPageCount=309;
+		Author newAuthor =new Author("Onur","Yartaşı");
+		User newUser = new User("editor2","password2","firstname","lastname","email",
 					"type",1,false);
 		BookCategory newBookCategory = new BookCategory("Drama");
 		boolean result = book.updateBook(tokenAdmin,newname,newTitle,newDescription,newPageCount,newAuthor,newUser,newBookCategory);
@@ -218,34 +218,32 @@ public class BookTest {
 	
 	@Test
 	public void testUpdateBookWithSelfUser() {
-		 String newname ="Horror Story";
-		 String newTitle = "This is a Horror Story";
-		 String newDescription = "Scary story";
-		 int newPageCount=309;
-		 Author newAuthor =null;
-		 User newUser = new User("username2","password2","firstname","lastname","email",
-					"type",1,false);
+		String newname ="Horror Story";
+		String newTitle = "This is a Horror Story";
+		String newDescription = "Scary story";
+		int newPageCount=309;
+		Author newAuthor =new Author("Onur","Yartaşı");
+		User newUser = null;
 		BookCategory newBookCategory = new BookCategory("Drama");
 		boolean result = book.updateBook(tokenEditor,newname,newTitle,newDescription,newPageCount,newAuthor,newUser,newBookCategory);
 		assertTrue(result);
-	    assertEquals(newname, book.getName());
-	    assertEquals(newTitle, book.getTitle());
-	    assertEquals(newDescription, book.getDescription());
-	    assertEquals(newDescription, book.getDescription());
-	    assertEquals(newAuthor, book.getAuthor());
-	    assertNotNull(book.getUser());
-	    assertEquals(newBookCategory,book.getCategory());	
+		assertEquals(newname, book.getName());
+		assertEquals(newTitle, book.getTitle());
+		assertEquals(newDescription, book.getDescription());
+		assertEquals(newDescription, book.getDescription());
+		assertEquals(newAuthor, book.getAuthor());
+		assertNotNull(book.getUser());
+		assertEquals(newBookCategory,book.getCategory());	
 		
 	}
 	@Test
 	public void testUpdateBookWithAnotherUser() {
-		 String newname ="Horror Story";
-		 String newTitle = "This is a Horror Story";
-		 String newDescription = "Scary story";
-		 int newPageCount=309;
-		 Author newAuthor =null;
-		 User newUser = new User("username2","password2","firstname","lastname","email",
-					"type",1,false);
+		String newname ="Horror Story";
+		String newTitle = "This is a Horror Story";
+		String newDescription = "Scary story";
+		int newPageCount=309;
+		Author newAuthor =new Author("Onur","Yartaşı");
+		User newUser = null;
 		BookCategory newBookCategory = new BookCategory("Drama");
 		boolean result = book.updateBook(tokenAnother,newname,newTitle,newDescription,newPageCount,newAuthor,newUser,newBookCategory);
 		assertFalse(result);	
