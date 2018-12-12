@@ -164,7 +164,7 @@ public class Book {
 		DecodedJWT jwt = JWT.decode(token);
 	    String role = jwt.getClaim("role").asString();
 	    String username = jwt.getClaim("sub").asString();
-	    if(role.equals("admin")) {
+	    if(role.equals("admin") || role.equals("moderator")) {
 			this.setName(name);
 			this.setTitle(title);
 			this.setDescription(description);
