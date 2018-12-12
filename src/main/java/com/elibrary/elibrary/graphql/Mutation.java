@@ -138,13 +138,7 @@ public class Mutation implements GraphQLMutationResolver {
     }
     public User userToEditor(long id) {
     	User user = userRepository.findById(id).get();
-    	user.setType("editor");  			
-    	return user;				
+        user.setType("editor");
+        return userRepository.save(user);
     }
-    
-    
-    
-    
-    
-    
 }
