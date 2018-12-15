@@ -120,6 +120,13 @@ public class Mutation implements GraphQLMutationResolver {
         return user.transformUser();
     }
 
+    public User changeUserType(long id, String type){
+        User user = userRepository.findById(id).get();
+        user.setType(type);
+        userRepository.save(user);
+        return user;
+    }
+
     public User updateUser(long id, String firstName, String lastName, String email) {
         User user = userRepository.findById(id).get();
         user.updateUser(firstName, lastName, email);
