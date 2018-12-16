@@ -45,38 +45,31 @@ public class BookController {
 		this.bookRepository = bookRepository;
 	}
     
-    @PostMapping("/upload") // //new annotation since 4.3
-    public String singleFileUpload(@RequestParam("file") MultipartFile file,
-                                   RedirectAttributes redirectAttributes) {
-
+    @PostMapping("/upload/{bookId:.+}")
+    public boolean singleFileUpload(@RequestParam("file") MultipartFile file,
+                                   RedirectAttributes redirectAttributes,
+                                   @PathVariable("bookId") long bookId) {
         if (file.isEmpty()) {
-            redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
-            return "redirect:uploadStatus";
+            System.out.print("Please select a file to upload");
+            return false;
         }
 
         try {
-
-            // Get the file and save it somewhere
             byte[] bytes = file.getBytes();
-            Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
+            Path path = Paths.get(UPLOADED_FOLDER + bookId + "-" + file.getOriginalFilename());
             Files.write(path, bytes);
-            //Book book = bookRepository.findById(id).get();
-            //book.setFilePath(String.valueOf(path));
-            
-            redirectAttributes.addFlashAttribute("message",
-                    "You successfully uploaded '" + file.getOriginalFilename() + "'");
+            Book book = bookRepository.findById(bookId).get();
+            book.setFilePath(String.valueOf(path));
+            bookRepository.save(book);
+            System.out.print("You successfully uploaded '" + file.getOriginalFilename() + "'");
 
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
-
-        return "redirect:/uploadStatus";
+        return true;
     }
 
-    @GetMapping("/uploadStatus")
-    public String uploadStatus() {
-        return "uploadStatus";
-    }
     @RequestMapping("/download/{fileName:.+}")
     public void downloadPDFResource( HttpServletRequest request,
                                      HttpServletResponse response,

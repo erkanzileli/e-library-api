@@ -65,7 +65,7 @@ type Book {
 	likeCount: Int
 	user: User
 	category: BookCategory
-
+	filePath: String
 }
 
 type BookCategory{
