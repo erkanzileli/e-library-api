@@ -38,6 +38,7 @@ public class BookRepositoryTest {
 	private String name ="Onurcem";
 	private String title = "Onurcemin Sucu Ne?";
 	private String description = "Onurcemin tuvalet sorunları";
+	private String filePath = "book/book.pdf";
 	private int pageCount = 333;
 	private int status = 1;
 	private Author author =new Author("Erkan","Zileli");
@@ -49,7 +50,7 @@ public class BookRepositoryTest {
     
 	@Before
 	public void beforeEach(){
-			book = new Book(name, title, description, pageCount, status, author, downloadCount, likeCount, user, bookCategory);
+			book = new Book(name, title, description, pageCount, status, author, downloadCount, likeCount, user, bookCategory, filePath);
 			tokenEditor ="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlZGl0b3IiLCJyb2xlIjoiZWRpdG9yIiwiZXhwIjoxNTQ0NjkzODI0fQ.MHjUPA6nuIj0RUp"
 					+ "--zQwoDxYGsZGzaAYYIxMxcOHO-_6MUsKvdF7Qt3CXnLmw558nDrXie-8pCm_hRkcm7kHEA";
 			tokenAdmin = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJhZG1pbiIsImV4cCI6MTU0NDY5Mzg4Nn0"

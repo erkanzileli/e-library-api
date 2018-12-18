@@ -59,7 +59,7 @@ public class BookController {
             Path path = Paths.get(UPLOADED_FOLDER + bookId + "-" + file.getOriginalFilename());
             Files.write(path, bytes);
             Book book = bookRepository.findById(bookId).get();
-            book.setFilePath(String.valueOf(path));
+            book.setFilePath(String.valueOf(Paths.get(bookId + "-" + file.getOriginalFilename())));
             bookRepository.save(book);
             System.out.print("You successfully uploaded '" + file.getOriginalFilename() + "'");
 
@@ -86,6 +86,9 @@ public class BookController {
             {
                 Files.copy(file, response.getOutputStream());
                 response.getOutputStream().flush();
+                Book book = bookRepository.findById(Long.parseLong(fileName.split("-")[0])).get();
+                book.setDownloadCount(book.getDownloadCount() + 1);
+                bookRepository.save(book);
             }
             catch (IOException ex) {
                 ex.printStackTrace();

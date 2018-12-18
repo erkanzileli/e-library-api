@@ -48,7 +48,7 @@ public class Book {
 	private BookCategory category;
 
 	public Book(String name, String title, String description, int pageCount, int status, Author author,
-			int downloadCount, int likeCount, User user, BookCategory category) {
+			int downloadCount, int likeCount, User user, BookCategory category, String filePath) {
 		this.name = name;
 		this.title = title;
 		this.description = description;
@@ -59,6 +59,7 @@ public class Book {
 		this.likeCount = likeCount;
 		this.user = user;
 		this.category = category;
+		this.filePath = filePath;
 	}
 
 	public Book() {
@@ -186,7 +187,6 @@ public class Book {
 	}
 	
 	public boolean deleteBook(String token) {
-		token = token.split(" ")[1];
 		DecodedJWT jwt = JWT.decode(token);
 	    String role = jwt.getClaim("role").asString();
 	    String username = jwt.getClaim("sub").asString();

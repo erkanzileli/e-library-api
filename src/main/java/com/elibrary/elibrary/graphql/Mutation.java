@@ -84,7 +84,7 @@ public class Mutation implements GraphQLMutationResolver {
         Author author = authorRepository.findById(authorId).get();
         BookCategory bookCategory = bookCategoryRepository.findById(categoryId).get();
         User user = userRepository.findByUsername(username);
-        return bookRepository.save(new Book(name, title,description,pageCount, 1, author, 0, 0 , user, bookCategory));
+        return bookRepository.save(new Book(name, title,description,pageCount, 1, author, 0, 0 , user, bookCategory, null));
     }
 
     public Book updateBook(long id,String token, String name, String title, String description, int pageCount, long authorId,long userId, long categoryId) {
@@ -97,7 +97,9 @@ public class Mutation implements GraphQLMutationResolver {
         		authorRepository.findById(authorId).get(),
         		userRepository.findById(userId).get(),
         		bookCategoryRepository.findById(categoryId).get());
-        
+        System.out.println(result);
+        System.out.println(result);
+        System.out.println(result);
         return bookRepository.save(book);
     }
 

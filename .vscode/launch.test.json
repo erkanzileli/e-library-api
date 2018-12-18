@@ -1,0 +1,30 @@
+{
+    "run": {
+        "default": "",
+        "items": [
+            {
+                "name": "e-library",
+                "projectName": "e-library",
+                "workingDirectory": "/home/erkanzileli/git/agile/e-library-api",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    },
+    "debug": {
+        "default": "",
+        "items": [
+            {
+                "name": "e-library",
+                "projectName": "e-library",
+                "workingDirectory": "/home/erkanzileli/git/agile/e-library-api",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    }
+}
