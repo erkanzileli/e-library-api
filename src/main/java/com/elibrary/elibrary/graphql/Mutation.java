@@ -1,5 +1,8 @@
 package com.elibrary.elibrary.graphql;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.elibrary.elibrary.domain.Author;
 import com.elibrary.elibrary.domain.Book;
@@ -10,8 +13,9 @@ import com.elibrary.elibrary.repository.AuthorRepository;
 import com.elibrary.elibrary.repository.BookCategoryRepository;
 import com.elibrary.elibrary.repository.BookRepository;
 import com.elibrary.elibrary.repository.UserRepository;
-import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 
 public class Mutation implements GraphQLMutationResolver {
     private AuthorRepository authorRepository;
@@ -23,15 +27,16 @@ public class Mutation implements GraphQLMutationResolver {
 
     }
 
-    public Mutation(AuthorRepository authorRepository, BookRepository bookRepository, BookCategoryRepository bookCategoryRepository, UserRepository userRepository) {
+    public Mutation(AuthorRepository authorRepository, BookRepository bookRepository,
+            BookCategoryRepository bookCategoryRepository, UserRepository userRepository) {
         this.authorRepository = authorRepository;
-        this.bookCategoryRepository= bookCategoryRepository;
+        this.bookCategoryRepository = bookCategoryRepository;
         this.bookRepository = bookRepository;
         this.userRepository = userRepository;
     }
 
     /*
-    Author
+     * Author
      */
     public Author createAuthor(String firstName, String lastName) {
         return authorRepository.save(new Author(firstName, lastName));
@@ -46,19 +51,30 @@ public class Mutation implements GraphQLMutationResolver {
 
     public boolean deleteAuthor(long id) {
         try {
-            Author author = authorRepository.getOne(id);
+            List<Book> books = bookRepository.findAll();
+            books.forEach(book -> {
+                if (book.getAuthor() != null && book.getAuthor().getId() == id) {
+                    book.setAuthor(null);
+                }
+            });
+            bookRepository.saveAll(books);
+            Author author = authorRepository.findById(id).get();
             authorRepository.delete(author);
             return true;
-        }catch (JpaObjectRetrievalFailureException e){
+        } catch (JpaObjectRetrievalFailureException e) {
             return false;
         }
     }
 
     /*
-    BookCategory
+     * BookCategory
      */
     public BookCategory createBookCategory(String name) {
-        return bookCategoryRepository.save(new BookCategory(name));
+        try {
+            return bookCategoryRepository.save(new BookCategory(name));
+        } catch (DataIntegrityViolationException e) {
+            return null;
+        }
     }
 
     public BookCategory updateBookCategory(long id, String name) {
@@ -69,60 +85,67 @@ public class Mutation implements GraphQLMutationResolver {
 
     public boolean deleteBookCategory(long id) {
         try {
-            BookCategory bookCategory = bookCategoryRepository.getOne(id);
+            List<Book> books = bookRepository.findAll();
+            books.forEach(book -> {
+                if (book.getCategory() != null && book.getCategory().getId() == id) {
+                    book.setCategory(null);
+                }
+            });
+            bookRepository.saveAll(books);
+            BookCategory bookCategory = bookCategoryRepository.findById(id).get();
             bookCategoryRepository.delete(bookCategory);
             return true;
-        }catch (JpaObjectRetrievalFailureException e){
+        } catch (JpaObjectRetrievalFailureException e) {
             return false;
         }
     }
 
     /*
-    Book
+     * Book
      */
-    public Book createBook(String name, String title, String description, int pageCount, String username, long authorId, long categoryId) {
+    public Book createBook(String name, String title, String description, int pageCount, String username, long authorId,
+            long categoryId) {
         Author author = authorRepository.findById(authorId).get();
         BookCategory bookCategory = bookCategoryRepository.findById(categoryId).get();
         User user = userRepository.findByUsername(username);
-        return bookRepository.save(new Book(name, title,description,pageCount, 1, author, 0, 0 , user, bookCategory, null));
+        return bookRepository
+                .save(new Book(name, title, description, pageCount, 1, author, 0, 0, user, bookCategory, null));
     }
 
-    public Book updateBook(long id,String token, String name, String title, String description, int pageCount, long authorId,long userId, long categoryId) {
+    public Book updateBook(long id, String token, String name, String title, String description, int pageCount,
+            long authorId, long userId, long categoryId) {
         Book book = bookRepository.findById(id).get();
-        boolean result = book.updateBook(token,
-        		name,
-        		title,
-        		description,
-        		pageCount,
-        		authorRepository.findById(authorId).get(),
-        		userRepository.findById(userId).get(),
-        		bookCategoryRepository.findById(categoryId).get());
+        boolean result = book.updateBook(token, name, title, description, pageCount,
+                authorRepository.findById(authorId).get(), userRepository.findById(userId).get(),
+                bookCategoryRepository.findById(categoryId).get());
         System.out.println(result);
         System.out.println(result);
         System.out.println(result);
         return bookRepository.save(book);
     }
 
-    public boolean deleteBook(long id,String token) {
+    public boolean deleteBook(long id, String token) {
         try {
             Book book = bookRepository.findById(id).get();
             boolean result = book.deleteBook(token);
-            if (result) {bookRepository.delete(book);}
+            if (result) {
+                bookRepository.delete(book);
+            }
             return true;
-        }catch (JpaObjectRetrievalFailureException e){
+        } catch (JpaObjectRetrievalFailureException e) {
             return false;
         }
     }
 
     /*
-    User
+     * User
      */
     public boolean transformUser(long id) {
         User user = userRepository.getOne(id);
         return user.transformUser();
     }
 
-    public User changeUserType(long id, String type){
+    public User changeUserType(long id, String type) {
         User user = userRepository.findById(id).get();
         user.setType(type);
         userRepository.save(user);
@@ -136,20 +159,22 @@ public class Mutation implements GraphQLMutationResolver {
         return user;
     }
 
-    public boolean requestUser(String username){
+    public boolean requestUser(String username) {
         User user = userRepository.findByUsername(username);
-        if(!user.isRequested()){
+        if (!user.isRequested()) {
             user.setRequested(true);
             userRepository.save(user);
             return true;
         }
         return false;
     }
+
     public User userToEditor(long id) {
         User user = userRepository.findById(id).get();
         user.setType("editor");
         return userRepository.save(user);
     }
+
     public User ignoreUser(String username) {
         User user = userRepository.findByUsername(username);
         user.setStatus(0);
