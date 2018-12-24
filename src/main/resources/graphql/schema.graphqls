@@ -32,8 +32,8 @@ type Mutation {
 	requestUser(username: String!): Boolean
 	userToEditor(id: Long!): User
 	changeUserType(id: Long!, type: String!): User
-	ignoreUser(username: String!): User
-}
+	changeUserStatus(username: String!, status: Boolean!): User
+	}
 
 type Author{
     id: Long

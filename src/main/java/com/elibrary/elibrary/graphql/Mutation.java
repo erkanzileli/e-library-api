@@ -28,7 +28,7 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public Mutation(AuthorRepository authorRepository, BookRepository bookRepository,
-            BookCategoryRepository bookCategoryRepository, UserRepository userRepository) {
+                    BookCategoryRepository bookCategoryRepository, UserRepository userRepository) {
         this.authorRepository = authorRepository;
         this.bookCategoryRepository = bookCategoryRepository;
         this.bookRepository = bookRepository;
@@ -104,7 +104,7 @@ public class Mutation implements GraphQLMutationResolver {
      * Book
      */
     public Book createBook(String name, String title, String description, int pageCount, String username, long authorId,
-            long categoryId) {
+                           long categoryId) {
         Author author = authorRepository.findById(authorId).get();
         BookCategory bookCategory = bookCategoryRepository.findById(categoryId).get();
         User user = userRepository.findByUsername(username);
@@ -113,7 +113,7 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public Book updateBook(long id, String token, String name, String title, String description, int pageCount,
-            long authorId, long userId, long categoryId) {
+                           long authorId, long userId, long categoryId) {
         Book book = bookRepository.findById(id).get();
         boolean result = book.updateBook(token, name, title, description, pageCount,
                 authorRepository.findById(authorId).get(), userRepository.findById(userId).get(),
@@ -175,9 +175,13 @@ public class Mutation implements GraphQLMutationResolver {
         return userRepository.save(user);
     }
 
-    public User ignoreUser(String username) {
+    public User changeUserStatus(String username, boolean status) {
         User user = userRepository.findByUsername(username);
-        user.setStatus(0);
+        if (status) {
+            user.setStatus(1);
+        } else {
+            user.setStatus(0);
+        }
         return userRepository.save(user);
     }
 }
